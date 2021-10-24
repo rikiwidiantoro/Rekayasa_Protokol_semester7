@@ -20,8 +20,8 @@ String header;
 String output26State = "off";
 String output27State = "off";
 
-String led_list[8] = {"lampu_jalan_1", "lampu_jalan_2", "lampu_jalan_3", "lampu_jalan_4", "lampu_jalan_5", "lampu_jalan_6", "lampu_jalan_7", "lampu_jalan_8"};
-String led_state[8];
+String led_list[9] = {"lampu_jalan_1", "lampu_jalan_2", "lampu_jalan_3", "lampu_jalan_4", "lampu_jalan_5", "lampu_jalan_6", "lampu_jalan_7", "lampu_jalan_8", "semua_lampu"};
+String led_state[9];
 
 bool running_right = false;
 
@@ -29,11 +29,12 @@ bool running_right = false;
 #define lampu_jalan_1 D0
 #define led_1 D1
 #define led_2 D2
-#define led_3 D4
-#define led_4 D5
-#define led_5 D6
-#define led_6 D7
-#define led_7 D8
+#define led_3 D3
+#define led_4 D4
+#define led_5 D5
+#define led_6 D6
+#define led_7 D7
+#define led_8 D8
 
 // Current time
 unsigned long currentTime = millis();
@@ -53,6 +54,7 @@ void setup() {
   pinMode(led_5, OUTPUT);
   pinMode(led_6, OUTPUT);
   pinMode(led_7, OUTPUT);
+  pinMode(led_8, OUTPUT);
   
   digitalWrite(lampu_jalan_1, LOW);
   digitalWrite(led_1, LOW);
@@ -62,8 +64,9 @@ void setup() {
   digitalWrite(led_5, LOW);
   digitalWrite(led_6, LOW);
   digitalWrite(led_7, LOW);
+  digitalWrite(led_8, LOW);
 
-  for(int i=0;i < 8;i++){
+  for(int i=0;i < 9;i++){
     led_state[i] = "off";
   }
   
@@ -109,7 +112,7 @@ void loop(){
             client.println("Connection: close");
             client.println();
 
-            for(int i=0;i < 8;i++){
+            for(int i=0;i < 9;i++){
               if (header.indexOf("GET /" + led_list[i] + "/on") >= 0) {
                 Serial.println(led_list[i] + " on");
                 led_state[i] = "on";
@@ -139,7 +142,7 @@ void loop(){
             // Web Page Heading
             client.println("<body><h1>ESP32 Web Server</h1><h1>LAMPU JALAN DESA</h1>");
 
-            for(int i=0;i < 8;i++){
+            for(int i=0;i < 9;i++){
               // Display current state, and ON/OFF buttons for GPIO 27  
               client.println("<p>" + led_list[i] + " [" + led_state[i] + "] " + "</p>");
               // If the output27State is off, it displays the ON button       
@@ -240,6 +243,12 @@ void loop(){
   }
   if(led_state[7] == "on"){
     digitalWrite(led_7, HIGH);
+  }
+  else{
+    digitalWrite(led_7, LOW);
+  }
+  if(led_state[8] == "on"){
+    digitalWrite(led_8, HIGH);
     led_state[0] == "on";
     digitalWrite(lampu_jalan_1, HIGH);
     led_state[1] == "on";
@@ -254,9 +263,11 @@ void loop(){
     digitalWrite(led_5, HIGH);
     led_state[6] == "on";
     digitalWrite(led_6, HIGH);
+    led_state[7] == "on";
+    digitalWrite(led_7, HIGH);
   }
   else{
-    digitalWrite(led_7, LOW);
+    digitalWrite(led_8, LOW);
   }
 }
 
