@@ -1,14 +1,16 @@
 /*********
-  Rui Santos
-  Complete project details at https://randomnerdtutorials.com  
+  Kelas 7C Teknik Informatika
+  Riki Widiantoro
+  Melyana Dwi T
+  Fitriyanti 
 *********/
 
 // Load Wi-Fi library
 #include <ESP8266WiFi.h>
 
 // Replace with your network credentials
-const char* ssid = "Kere Paketan";
-const char* password = "abc12345";
+const char* ssid = "OPPO Reno4 F";
+const char* password = "Abcd123456";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -140,7 +142,7 @@ void loop(){
             client.println(".button2 {background-color: #555555;}</style></head>");
             
             // Web Page Heading
-            client.println("<body><h1>ESP32 Web Server</h1><h1>LAMPU JALAN DESA</h1>");
+            client.println("<body><h1>LAMPU JALAN DESA</h1>");
 
             for(int i=0;i < 9;i++){
               // Display current state, and ON/OFF buttons for GPIO 27  
